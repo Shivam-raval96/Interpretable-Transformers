@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Mini-con</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="frontpage.html">Home</a></li>
+                <li class="active"><a href="Updates.html">Updates<span class="sr-only">(current)</span></a></li>
+                <li><a href="math.html">Theory</a></li>
+                <li><a href="openquestions.html">Open Questions</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<p> This is a log of all updates and trials, results and successes (and failures).
+    </br>Mini-con refers to small scale interpretable transformers under investigation here. Mini-con(n_layers,n_heads) is a transformer model with n_layers Attention layers with n_heads in each layer.</p>
+
+</br><h1 style="text-align: center"> June week 1</h1></br>
+<h2>miniBERT-style models</h2>
+<span class="todos">TODO: Look into the garbage predictions, maybe they're not too garbage | Use downstream tasks to determine if the model is properly trained</span>
+</br>Under construction but TLDR: tried to train HuggingFace BERT style models on Esperanto, Harry Potter and WikiText data. </br>
+
+<p><b>esBERTo:</b> Esperanto dataset. Works as expected? Model seems to predict some text completions that may be sensible but hard to understand because it's in Esperanto...</br>
+</p>
+
+<p><b>rowBERTo:</b> Harry Potter texts - Smaller dataset. On some text completions, it looks like it fills in some gramatically correct words (possibly because it has seen similar sentences and is just overfit to the training data), but on some unseen text prompts it just predicts the most common characters (and, the, ",", etc.)  </br>
+</p>
+
+<p><b>wikiBERTo:</b> WikiText - larger dataset but outputs similar to Harry Potter data, maybe learned more sensible grammer. Didn't probe it further.
+</p>
+A (potentially) interesting artefact was seen while training the wikiBERTo was this bump in the training loss. This could be something similar to what is seen in <a href="https://github.com/karpathy/minGPT">other large models</a> too. But needs further investigation.
+Training loss curve: <img src="wikibert-training.png" alt="Training Loss of wikiBERTo model" style="width:230px;height:160px;"> </br>
+
+Thoughts: For a BERT style model, a downstream task may be a better way to figure out if it's learning anything useful. If looking into it in the future, then look into some tasks (from the original BERT paper)
+
+<h2>miniGPT-style models</h2>
+
+<h3>Pre Mechanistic attempts</h3>
+<b><a href="https://github.com/karpathy/minGPT">minGPT</a>:</b> Great and simple implementation of small GPT style model, completely understandable if you know pytorch.
+
+<b>NOTE:</b> The embedding in minGPT simply converts chars to numbers and encodes them. Possibly BPE might be better.
+
+
+
+
+
+
+
+
+
+
+</br></br><h1 style="text-align: center"> June week 2</h1></br>
+<h3>Mini-con</h3>
+Modified the minGPT model to make no mlp only attention transformer Mini-con with variable number of attention layers and heads. Still need to poke around the minGPT code to parse through and understand everything but for now this copy-paste works...
+</br><span class="todos"> TODO: Modify the model to ignore < pad > tokens | Look into HuggingFace BPE encoding to remove the unused base tokens or make tokenizer from scratch</span>
+</br><b>-BPE Tokenizer attempt-</b></br>
+Simple encoder encodes each character to a number. ByteLevelBPETokenizer produces additional tokens by grouping most frequent sub-word level characters.
+</br></br>
+There are some issues with using the same simple encoder recipe here. The simple encoder arranges data and targets so that the first i elements of x
+will be asked to predict the i-th element of y. So for example if block_size is 4, then
+we could e.g. sample a chunk of text "hello", the integers in x will correspond to "hell" and in y will be "ello". This will
+then actually "multitask" 4 separate examples at the same time in the language model:
+given just "h", please predict "e" as next;
+given "he" please predict "l" next;
+given "hel" predict "l" next;
+given "hell" predict "o". The dataset generator collects characters of block_size+1 and arranges them as such and encodes them to numbers</br></br>
+<span class = "issue">Issue#1:</span> But for a sub-word token that is a collection of characters there is an issue: the resulting vectors may not be of the same size. Adding a padding doesnt work here because the simple model doesnt not have the capability to ignore '< pad >' tokens. So after training, the predictions became all < pad > after the first one is predicted. Not good. </br> Need to tweak the model somehow. What worked was to truncate the dataset at some arbitrary min-length so all vectors are still the same size but with no pads.</br>
+<span class = "issue">Issue#2:</span> The HuggingFace BPE Tokenizer generates some unused base tokens (eg. â,Ģ,Ŀ) tha also start appreaing in the predictions though they shouldnt be there in the training data. Need to check the dataset whether that is true and find a way to remove them. Simply removing them from the dictionary of encodings doesnt work because the Tokenizer looks for them but cant find them...
+<h3>Zero Layer Transformer</h3>
+
+Mini-con(0,0) trained on Harry Potter texts (text prompt given to the model between red bars):
+</br><img src="june_wk2_zero_layer_hp.png" alt="Zero Layer softmax" style="zoom:80%"></br>
+Looks like bigram predictions, because there are many "he","the","we" etc. like tokens
+
+</br></br><h4>Some Mechanistic trials</h4>
+
+token -> embed -> unembed -> out |
+    $x_{out} = W_u W_e x_{in}$
+
+</br></br><p> TLDR: For 1 token, this predicts the next token most frequently seen after the first. The optimal W_u*W_e is the one that predicts the correct character after the first. So each element of W_u*W_e is num(token2token1)
+    </br>
+
+    </br>Test with some syntehtic data:  Predicted Next character is $argmax(softmax(W_u W_e x_{in}))$. For a single token this is argmax a vector of vocab_size dim <img src="june_wk2_zero_layer.png" alt="Zero Layer softmax" style="zoom:80%"></br> and for a string of N tokens this would be vocab_size x N, but best it can do is simultanesusly generate predictions for the N tokens not understand the context or look at any other tokens while predicting because there is no attention.
+    </br><span class="question">Question:</span> Does having a sentence as input makes sense? Only for parallelising single token predictions best it can do is simultaneous 1 token prediction for each character of the sentence as there is no context.
+    </br><span class="question">Question:</span>  Is the bigram log-likelihood <a href="math.html">approximate? Maybe because</a> the embedding size is smaller than the vocab size. How does the embed dimension affect it? </p>
+
+<h3>One Layer Attention only Transformer</h3>
+
+
+Mini-con(1,4) trained on harry potter texts generates this text (text prompt given to the model between red bars):
+<img src="june_wk2_one_layer_hp.png" alt="Zero Layer softmax" style="zoom:80%"></br>
+The bigram-like and copying behavior (maybe) seen qualitatively. Model learns some bigram-like statistics to produce words like Harry and other common words but they also repeat in the text after so the model may be doing some copying too. Other runs generate the footer with page number and book name and once it is seen similar footer appears once or twice again later.
+</br><span class="todos">TODO: Find a way to look at learned token weights and attention patterns  | Theory</span>
+
+</br>token -> embed -> Attn -> unembed -> out</br>
+
+</br>$x_{out} = W_u x_{1}$
+
+</br>$x_{1} = x_{0} +  \sum_{all heads} h(x_{0})$
+
+</br>$h(x_{0})_i = W_o(\sum A_{ij} W_v x_{j}) $
+
+
+
+
+
+
+</br></br><h1 style="text-align: center"> June week 3</h1></br></br>
+<h3>Two Layer Attention only Transformer</h3>
+</body>
+</html>

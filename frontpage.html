@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Mini-con</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="frontpage.html">Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="Updates.html">Updates</a></li>
+                <li><a href="openquestions.html">Open Questions</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<p> This is a rough collection of my trials and explorations on building and training Transformers from ground up. All the work is preliminary and requires careful verification, so take all the insights and observations with a grain of salt, unless explicitly mentioned. </p>
+
+PS. I didnt know what else to put on the front page so I'll add a list of papers (and some useful takeaways) from cool papers I come across! The Lorem ipsum will be replaced with the paper summary over time.
+
+</body>
+
+<br><h2>Summary of Interesting papers</h2>
+
+<br><p>Seminal Transformer works</p>
+
+<button class="collapsible">Neural Machine Translation by Jointly Learning to Align and Translate <a href ="https://arxiv.org/abs/1409.0473">[arXiv:1409.0473]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Attention Is All You Need <a href ="https://arxiv.org/abs/1706.03762">[arXiv:1706.03762]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<button class="collapsible">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding <a href ="https://arxiv.org/abs/1810.04805">[arXiv:1810.04805]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">GPT: Improving Language Understanding by Generative Pre-Training <a href ="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">GPT-2: Language Models are Unsupervised Multitask Learners <a href ="https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">GPT-3: Language Models are Few-Shot Learners <a href ="https://arxiv.org/abs/2103.03404">[arXiv:2103.03404]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Calibrate Before Use: Improving Few-Shot Performance of Language Models <a href ="https://arxiv.org/abs/2102.09690">[arXiv:2102.09690]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<button class="collapsible">Making Pre-trained Language Models Better Few-shot Learners <a href ="https://arxiv.org/abs/2012.15723">[arXiv:2012.15723]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets <a href ="https://arxiv.org/abs/2201.02177">[arXiv:2201.02177]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Multimodal Neurons in Artificial Neural Networks <a href ="https://openai.com/blog/multimodal-neurons/">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Prompt Programming for Large Language Models: Beyond the Few-Shot Paradigm <a href ="https://arxiv.org/abs/2102.07350">[arXiv:2102.07350]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">DALLE: Zero-Shot Text-to-Image Generation <a href ="https://arxiv.org/abs/2102.12092">[arXiv:2102.12092]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+
+
+<br><p>On Transformer Interpretability</p>
+
+
+<button class="collapsible">Attention is Not All You Need: Pure Attention Loses Rank Doubly Exponentially with Depth <a href ="https://arxiv.org/abs/2103.03404">[arXiv:2103.03404]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Attention is not Explanation <a href="https://arxiv.org/abs/1902.10186">[arXiv:1902.10186]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+<button class="collapsible">Attention is Not Only a Weight: Analyzing Transformers with Vector Norms <a href="https://arxiv.org/abs/2004.10102">[arXiv:2004.10102]</a>
+</button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Knowledge Neurons in Pretrained Transformers <a href="https://arxiv.org/abs/2104.08696">[arXiv:2104.08696]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+<button class="collapsible">Analyzing Multi-Head Self-Attention: Specialized Heads Do the Heavy Lifting, the Rest Can Be Pruned <a href="https://arxiv.org/abs/1905.09418">[arXiv:1905.09418]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Transformer Feed-Forward Layers Are Key-Value Memories <a href="https://arxiv.org/abs/2012.14913">[arXiv:2012.14913]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Interpretable Textual Neuron Representations for NLP <a href="https://arxiv.org/abs/1809.07291">[arXiv:1809.07291]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Is Attention Interpretable? <a href="https://arxiv.org/abs/1906.03731">[arXiv:1906.03731]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">The elephant in the interpretability room: Why use attention as explanation when we have saliency methods? <a href="https://aclanthology.org/2020.blackboxnlp-1.14/">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Quantifying Attention Flow in Transformers <a href="https://arxiv.org/abs/2005.00928">[arXiv:2005.00928]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">On Identifiability in Transformers <a href="https://arxiv.org/abs/1908.04211">[arXiv:1908.04211]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<button class="collapsible">On the Relationship between Self-Attention and Convolutional Layers <a href="https://arxiv.org/abs/1911.03584">[arXiv:1911.03584]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+
+
+
+<button class="collapsible">AllenNLP Interpret: A Framework for Explaining Predictions of NLP Models <a href="https://arxiv.org/abs/1909.09251">[arXiv:1909.09251]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+
+
+
+
+<br><p>On Interpreting BERT-style models</p>
+<button class="collapsible">Do Attention Heads in BERT Track Syntactic Dependencies? <a href="https://arxiv.org/abs/1911.12246">[arXiv:1911.12246]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">A Primer in BERTology: What We Know About How BERT Works <a href="https://arxiv.org/abs/2002.12327">[arXiv:2002.12327]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">What Does BERT Look At? An Analysis of BERT’s Attention <a href="https://arxiv.org/abs/1906.04341">[arXiv:1906.04341]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">What does BERT dream of? <a href="https://pair-code.github.io/interpretability/text-dream/blogpost/">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+
+<br><p>On Interpreting GPT-style models</p>
+
+<button class="collapsible">Interpreting GPT: The Logit Lens <a href="https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">A Mathematical Framework for Transformer Circuits <a href="https://transformer-circuits.pub/2021/framework/index.html">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">In-context Learning and Induction Heads <a href="https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<br><p>Visual Analytics for Transformer</p>
+
+<button class="collapsible">VisBERT: Hidden-State Visualizations for Transformers <a href="https://arxiv.org/abs/2011.04507">[arXiv:2011.04507]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">DODRIO: Exploring Transformer Models with Interactive Visualization <a href="https://arxiv.org/abs/2103.14625">[arXiv:2103.14625]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">EXBERT: A Visual Analysis Tool to Explore Learned Representations in Transformer Model <a href="https://arxiv.org/abs/1910.05276">[arXiv:1910.05276]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">The Language Interpretability Tool: Extensible, Interactive Visualizations and Analysis for NLP Models <a href="https://arxiv.org/abs/2008.05122">[arXiv:2008.05122]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">A Multiscale Visualization of Attention in the Transformer Model <a href="https://arxiv.org/abs/1906.05714">[arXiv:1906.05714]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">What Does BERT Look At? An Analysis of BERT’s Attention <a href="https://arxiv.org/abs/1906.04341">[arXiv:1906.04341]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<button class="collapsible">Tensor2Tensor <a href="https://github.com/tensorflow/tensor2tensor/tree/master/tensor2tensor/visualization">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<button class="collapsible">What Have Language Models Learned? <a href="https://pair.withgoogle.com/explorables/fill-in-the-blank/">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<br><p>Modified Transformer models </p>
+
+<button class="collapsible">Linformer: Self-Attention with Linear Complexity <a href="https://arxiv.org/abs/2006.04768">[arXiv:2006.04768]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Longformer: The Long-Document Transformer <a href="https://arxiv.org/abs/2004.05150">[arXiv:2004.05150]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">RoFormer: Enhanced Transformer with Rotary Position Embedding <a href="https://arxiv.org/abs/2104.09864">[arXiv:2104.09864]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Shortformer: Better Language Modeling using Shorter Inputs <a href="https://arxiv.org/abs/2012.15832">[arXiv:2012.15832]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Primer: Searching for Efficient Transformers for Language Modeling <a href="https://arxiv.org/abs/2109.08668">[arXiv:2109.08668]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Codex: Evaluating Large Language Models Trained on Code <a href="https://arxiv.org/abs/2107.03374">[arXiv:2107.03374]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Highway Networks <a href="https://arxiv.org/abs/1505.00387">[arXiv:1505.00387]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<br><p>Related Mathematical works</p>
+
+<button class="collapsible">The low-rank eigenvalue problem <a href="https://arxiv.org/abs/1905.11490">[arXiv:1905.11490]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Real spectra of large real asymmetric random matrices <a href="https://arxiv.org/abs/2104.02584">[arXiv:2104.02584]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Linguistic Regularities in Continuous Space Word Representations <a href="https://aclanthology.org/N13-1090/">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Gaussian Error Linear Units (GELUs) <a href="https://arxiv.org/abs/1606.08415">[arXiv:1606.08415 ]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Scaling Laws for Neural Language Models <a href="https://arxiv.org/abs/2001.08361">[arXiv:2001.08361]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Qualitatively characterizing neural network optimization problems <a href="https://arxiv.org/abs/1412.6544">[arXiv:1412.6544]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">A mathematical theory of semantic development in deep neural networks <a href="https://www.pnas.org/doi/10.1073/pnas.1820226116">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Exact solutions to the nonlinear dynamics of learning in deep linear neural networks <a href="https://arxiv.org/abs/1312.6120">[arXiv:1312.6120]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">SVCCA: Singular Vector Canonical Correlation Analysis for Deep Learning Dynamics and Interpretability <a href="https://arxiv.org/abs/1706.05806">[arXiv:1706.05806]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Similarity of Neural Network Representations Revisited <a href="https://arxiv.org/abs/1905.00414">[arXiv:1905.00414]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Convergent Learning: Do different neural networks learn the same representations? <a href="https://arxiv.org/abs/1511.07543">[arXiv:1511.07543]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Visualizing the Loss Landscape of Neural Nets <a href="https://arxiv.org/abs/1712.09913">[arXiv:1712.09913]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Risks from Learned Optimization in Advanced Machine Learning Systems <a href="https://arxiv.org/abs/1906.01820">[arXiv:1906.01820]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Analyzing Monotonic Linear Interpolation in Neural Network Loss Landscapes <a href="https://arxiv.org/abs/2104.11044">[arXiv:2104.11044]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Geometry of Neural Network Loss Surfaces via Random Matrix Theory <a href="http://proceedings.mlr.press/v70/pennington17a.html">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+
+
+
+
+
+
+<br><p>Other works</p>
+
+<button class="collapsible">On the importance of single directions for generalization <a href="https://arxiv.org/abs/1803.06959">[arXiv:1803.06959]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<button class="collapsible">Rethinking the Role of Demonstrations: What Makes In-Context Learning Work? <a href="https://arxiv.org/abs/2202.12837">[arXiv:2202.12837]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">An Explanation of In-context Learning as Implicit Bayesian Inference <a href="https://arxiv.org/abs/2111.02080">[arXiv:2111.02080]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">What Context Features Can Transformer Language Models Use? <a href="https://arxiv.org/abs/2106.08367">[arXiv:2106.08367]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+
+<button class="collapsible">Transformers are Graph Neural Networks <a href="https://thegradient.pub/transformers-are-graph-neural-networks/">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<button class="collapsible">A General Language Assistant as a Laboratory for Alignment <a href="https://arxiv.org/abs/2112.00861">[arXiv:2112.00861]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Talking-Heads Attention <a href="https://arxiv.org/abs/2003.02436">[arXiv:2003.02436]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Learning to Generate Reviews and Discovering Sentiment <a href="https://arxiv.org/abs/1704.01444">[arXiv:1704.01444]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Scaling Language Models: Methods, Analysis & Insights from Training Gopher <a href="https://arxiv.org/abs/2112.11446">[arXiv:2112.11446]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Transformer Circuit Exercises <a href="https://transformer-circuits.pub/2021/exercises/index.html">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Visualizing weights <a href="https://distill.pub/2020/circuits/visualizing-weights/">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Future ML Systems Will Be Qualitatively Different <a href="https://bounded-regret.ghost.io/future-ml-systems-will-be-qualitatively-different/">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<button class="collapsible">Discovering the Hidden Vocabulary of DALLE-2 <a href="https://arxiv.org/abs/2206.00169">[arXiv:2206.00169]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">LaMDA <a href="https://blog.google/technology/ai/lamda/">[Link]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="collapsible">Towards a Human-like Open-Domain Chatbot <a href="https://arxiv.org/abs/2001.09977">[arXiv:2001.09977]</a></button>
+<div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("activate");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+
+</script>
+
+</div>
+
+
+</html>
