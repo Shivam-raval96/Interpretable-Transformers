@@ -81,9 +81,9 @@ Thoughts: Tweaking architecture to improve performance may seem appealing but th
 <p> These are small targeted questions that maybe be interesting and not as open ended:</p>
 
 </br> 1. How does the type of embedding affect the transformer output. For a zero layer, the tokens go directly from embedding to unembedding and so it is unclear how the output maybe be affected by the choice of embedding. Eg. <a href = "https://nlp.stanford.edu/projects/glove/">GloVe embeddings</a>
-or <a href = "https://www.tensorflow.org/tutorials/text/word2vec">GloVe embeddings</a> may be interesting to explore.
+or <a href = "https://www.tensorflow.org/tutorials/text/word2vec">GloVe embeddings</a> may be interesting to explore. Also, does starting with a pretrained embedding matrix help the training or not? Could be worth looking into.
 
-
+</br> 2. Is the output of the attention head (ie. the attention pattern) important or the linear combination of them, because in the output the attention heads are all summed up.
 
 </body>
 </html>

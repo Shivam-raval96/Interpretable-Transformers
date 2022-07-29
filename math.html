@@ -77,8 +77,37 @@
 
 <p> This is a collection some theoretical background and rough proofs.</p>
 
-<h3> Zero Layer Transformer predicts Bigram statistics</h3>
+<h3><b>Zero Layer Transformer predicts Bigram statistics</b></h3>
 <img src="math_zero_layer.jpg" alt="Zero Layer Bigram" style="zoom:25%"></br>
 <span class="question">Question:</span> Is this approximate Bigram statistics.<a href="https://youtu.be/V3NQaDR3xI4?t=122">Possibly...</a> because the embedding size is smaller than the vocab size.
+
+
+<br><br><h3><b>One Layer Attention only Transformer</b></h3>
+
+</br></br>$A = Softmax^*(q^Tk/\sqrt d) = Softmax^*(x^TW_E^TW_Q^TW_KW_Ex/\sqrt d) =  Softmax^*(x^TW_E^TW_{QK}W_Ex/\sqrt d)$
+</br>*-> Autoregressive masking (softmax considering only tokens preceding, can be done by setting the matrix values for the rest to -inf)
+
+</br></br>$x_{out} = T x_{0} $ ; $ T = W_u \cdot (I + A \otimes W_{OV}) \cdot W_E \cdot x_0$
+
+
+<br><br><span class="todos">TODO: Check the matrix dimensions and indices to make sure the equations make sense.</span>
+
+
+</br>token -> embed -> Attn -> unembed -> out</br>
+</br>$x_{out} = W_u x_{1}$
+</br>$x_{1} = x_{0} +  \sum_{all heads} h(x_{0})$
+</br>$h(x_{0})_i = W_o(\sum A_{ij} W_v x_{j}) $
+
+
+
+<br><br><h3><b>Two Layer Attention only Transformer</b></h3>
+    Similar to the one layer transformer,
+    </br></br>$A^1 = Softmax^*(x_0^TW_E^TW_{QK}W_Ex_0/\sqrt d)$
+    </br></br>$A^2 = Softmax^*(x_1^TW_{QK}x_1/\sqrt d)$ ; &nbsp  $x_1 = (I + A^1 \otimes W_{OV}) \cdot W_E \cdot x_0$
+
+</br></br>$x_{out} = T x_{0} $ ; $ T = W_u \cdot (I + A^2 \otimes W_{OV}) \cdot (I + A^1 \otimes W_{OV}) \cdot W_E \cdot x_0$
+
+
+
 </body>
 </html>

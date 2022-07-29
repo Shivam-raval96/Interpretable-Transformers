@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -77,7 +77,8 @@
 <p> This is a log of all updates and trials, results and successes (and failures).
     </br>Mini-con refers to small scale interpretable transformers under investigation here. Mini-con(n_layers,n_heads) is a transformer model with n_layers Attention layers with n_heads in each layer.</p>
 
-</br><h1 style="text-align: center"> June week 1</h1></br>
+<button class="collapsible"> <h1 style="text-align: center"> June week 1</h1> Training esBERTo style models</button>
+<div class="content">
 <h2>miniBERT-style models</h2>
 <span class="todos">TODO: Look into the garbage predictions, maybe they're not too garbage | Use downstream tasks to determine if the model is properly trained</span>
 </br>Under construction but TLDR: tried to train HuggingFace BERT style models on Esperanto, Harry Potter and WikiText data. </br>
@@ -102,72 +103,289 @@ Thoughts: For a BERT style model, a downstream task may be a better way to figur
 
 <b>NOTE:</b> The embedding in minGPT simply converts chars to numbers and encodes them. Possibly BPE might be better.
 
+</div>
 
+</br>
 
+<button class="collapsible"> <h1 style="text-align: center"> June week 2</h1> Zero layer Transformer</button>
+<div class="content">
+    <h3>Mini-con</h3>
+    Modified the minGPT model to make no mlp only attention transformer Mini-con with variable number of attention layers and heads. Still need to poke around the minGPT code to parse through and understand everything but for now this copy-paste works...
+    </br><span class="todos"> TODO: Modify the model to ignore < pad > tokens | Look into HuggingFace BPE encoding to remove the unused base tokens or make tokenizer from scratch</span>
+    </br><b>-BPE Tokenizer attempt-</b></br>
+    Simple encoder encodes each character to a number. ByteLevelBPETokenizer produces additional tokens by grouping most frequent sub-word level characters.
+    </br></br>
+    There are some issues with using the same simple encoder recipe here. The simple encoder arranges data and targets so that the first i elements of x
+    will be asked to predict the i-th element of y. So for example if block_size is 4, then
+    we could e.g. sample a chunk of text "hello", the integers in x will correspond to "hell" and in y will be "ello". This will
+    then actually "multitask" 4 separate examples at the same time in the language model:
+    given just "h", please predict "e" as next;
+    given "he" please predict "l" next;
+    given "hel" predict "l" next;
+    given "hell" predict "o". The dataset generator collects characters of block_size+1 and arranges them as such and encodes them to numbers</br></br>
+    <span class = "issue">Issue#1:</span> But for a sub-word token that is a collection of characters there is an issue: the resulting vectors may not be of the same size. Adding a padding doesnt work here because the simple model doesnt not have the capability to ignore '< pad >' tokens. So after training, the predictions became all < pad > after the first one is predicted. Not good. </br> Need to tweak the model somehow. What worked was to truncate the dataset at some arbitrary min-length so all vectors are still the same size but with no pads.</br>
+    <span class = "issue">Issue#2:</span> The HuggingFace BPE Tokenizer generates some unused base tokens (eg. â,Ģ,Ŀ) tha also start appreaing in the predictions though they shouldnt be there in the training data. Need to check the dataset whether that is true and find a way to remove them. Simply removing them from the dictionary of encodings doesnt work because the Tokenizer looks for them but cant find them...
+    <h3>Zero Layer Transformer</h3>
 
+    Mini-con(0,0) trained on Harry Potter texts (text prompt given to the model between red bars):
+    </br><img src="june_wk2_zero_layer_hp.png" alt="Zero Layer softmax" style="zoom:120%"></br>
+    Looks like bigram predictions, because there are many "he","the","we" etc. like tokens
 
+    </br></br><h4>Some Mechanistic trials</h4>
 
-
-
-
-
-</br></br><h1 style="text-align: center"> June week 2</h1></br>
-<h3>Mini-con</h3>
-Modified the minGPT model to make no mlp only attention transformer Mini-con with variable number of attention layers and heads. Still need to poke around the minGPT code to parse through and understand everything but for now this copy-paste works...
-</br><span class="todos"> TODO: Modify the model to ignore < pad > tokens | Look into HuggingFace BPE encoding to remove the unused base tokens or make tokenizer from scratch</span>
-</br><b>-BPE Tokenizer attempt-</b></br>
-Simple encoder encodes each character to a number. ByteLevelBPETokenizer produces additional tokens by grouping most frequent sub-word level characters.
-</br></br>
-There are some issues with using the same simple encoder recipe here. The simple encoder arranges data and targets so that the first i elements of x
-will be asked to predict the i-th element of y. So for example if block_size is 4, then
-we could e.g. sample a chunk of text "hello", the integers in x will correspond to "hell" and in y will be "ello". This will
-then actually "multitask" 4 separate examples at the same time in the language model:
-given just "h", please predict "e" as next;
-given "he" please predict "l" next;
-given "hel" predict "l" next;
-given "hell" predict "o". The dataset generator collects characters of block_size+1 and arranges them as such and encodes them to numbers</br></br>
-<span class = "issue">Issue#1:</span> But for a sub-word token that is a collection of characters there is an issue: the resulting vectors may not be of the same size. Adding a padding doesnt work here because the simple model doesnt not have the capability to ignore '< pad >' tokens. So after training, the predictions became all < pad > after the first one is predicted. Not good. </br> Need to tweak the model somehow. What worked was to truncate the dataset at some arbitrary min-length so all vectors are still the same size but with no pads.</br>
-<span class = "issue">Issue#2:</span> The HuggingFace BPE Tokenizer generates some unused base tokens (eg. â,Ģ,Ŀ) tha also start appreaing in the predictions though they shouldnt be there in the training data. Need to check the dataset whether that is true and find a way to remove them. Simply removing them from the dictionary of encodings doesnt work because the Tokenizer looks for them but cant find them...
-<h3>Zero Layer Transformer</h3>
-
-Mini-con(0,0) trained on Harry Potter texts (text prompt given to the model between red bars):
-</br><img src="june_wk2_zero_layer_hp.png" alt="Zero Layer softmax" style="zoom:80%"></br>
-Looks like bigram predictions, because there are many "he","the","we" etc. like tokens
-
-</br></br><h4>Some Mechanistic trials</h4>
-
-token -> embed -> unembed -> out |
+    token -> embed -> unembed -> out |
     $x_{out} = W_u W_e x_{in}$
 
-</br></br><p> TLDR: For 1 token, this predicts the next token most frequently seen after the first. The optimal W_u*W_e is the one that predicts the correct character after the first. So each element of W_u*W_e is num(token2token1)
+    </br></br><p> TLDR: For 1 token, this predicts the next token most frequently seen after the first. The optimal W_u*W_e is the one that predicts the correct character after the first. So each element of W_u*W_e is num(token2token1)
     </br>
 
     </br>Test with some syntehtic data:  Predicted Next character is $argmax(softmax(W_u W_e x_{in}))$. For a single token this is argmax a vector of vocab_size dim <img src="june_wk2_zero_layer.png" alt="Zero Layer softmax" style="zoom:80%"></br> and for a string of N tokens this would be vocab_size x N, but best it can do is simultanesusly generate predictions for the N tokens not understand the context or look at any other tokens while predicting because there is no attention.
     </br><span class="question">Question:</span> Does having a sentence as input makes sense? Only for parallelising single token predictions best it can do is simultaneous 1 token prediction for each character of the sentence as there is no context.
     </br><span class="question">Question:</span>  Is the bigram log-likelihood <a href="math.html">approximate? Maybe because</a> the embedding size is smaller than the vocab size. How does the embed dimension affect it? </p>
 
-<h3>One Layer Attention only Transformer</h3>
+    <h3>One Layer Attention only Transformer</h3>
 
 
-Mini-con(1,4) trained on harry potter texts generates this text (text prompt given to the model between red bars):
-<img src="june_wk2_one_layer_hp.png" alt="Zero Layer softmax" style="zoom:80%"></br>
-The bigram-like and copying behavior (maybe) seen qualitatively. Model learns some bigram-like statistics to produce words like Harry and other common words but they also repeat in the text after so the model may be doing some copying too. Other runs generate the footer with page number and book name and once it is seen similar footer appears once or twice again later.
-</br><span class="todos">TODO: Find a way to look at learned token weights and attention patterns  | Theory</span>
+    Mini-con(1,4) trained on harry potter texts generates this text (text prompt given to the model between red bars):
+    <img src="june_wk2_one_layer_hp.png" alt="Zero Layer softmax" style="zoom:120%"></br>
+    The bigram-like and copying behavior (maybe) seen qualitatively. Model learns some bigram-like statistics to produce words like Harry and other common words but they also repeat in the text after so the model may be doing some copying too. Other runs generate the footer with page number and book name and once it is seen similar footer appears once or twice again later.
+    </br><span class="todos">TODO: Find a way to look at learned token weights and attention patterns  | Theory</span>
 
-</br>token -> embed -> Attn -> unembed -> out</br>
+    </br>token -> embed -> Attn -> unembed -> out</br>
 
-</br>$x_{out} = W_u x_{1}$
+    </br>$x_{out} = W_u x_{1}$
 
-</br>$x_{1} = x_{0} +  \sum_{all heads} h(x_{0})$
+    </br>$x_{1} = x_{0} +  \sum_{all heads} h(x_{0})$
 
-</br>$h(x_{0})_i = W_o(\sum A_{ij} W_v x_{j}) $
-
-
-
-
+    </br>$h(x_{0})_i = W_o(\sum A_{ij} W_v x_{j}) $
+</div>
+</br>
 
 
-</br></br><h1 style="text-align: center"> June week 3</h1></br></br>
-<h3>Two Layer Attention only Transformer</h3>
+
+<button class="collapsible"> <h1 style="text-align: center"> June week 3</h1> Preliminary Literature survey, Coding Word-piece tokenizer </button>
+<div class="content">
+
+<b>Literature Survey:</b> Compiled a collection of works to go through and refer, added to the front page.
+    <br><br> Poking around in the model, realized that the dropouts and layer norm were turned on and included positional embeddings.  Turning them off significantly degraded the output. Let's investigate them one by one. Below are results for Mini-con(1,8) with:
+    <br>1. No dropouts, pos embeddings or layer norm: Train loss of 2.13 after 1 epoch and output looks garbage...
+    <br>2. A learnable vector for positional embeddings: Should not change much as it is just another weight matrix. BUT WAIT, it does~ Train loss of 1.50 after 1 epoch. Output looks better with a lot of recognizable words and a lot of most frequent words like "and, the, they" etc. but also "Harry, Hermione" etc.
+    <br>3. Added Pos embeddings and layer norm: Train Loss of 1.49 after 1 epoch
+    <br>4. Attn and residual dropouts of 0.1 only during attention calculation (+pos embeddings and layern norm): Train loss of ~1.50 after 1 epoch
+    <br>5. Added all above and a mlp block (linear->GELU->Linear): Train Loss of 1.36 after 1 epoch, clear words but makes lesser grammatical sense.
+    <br> For context, Mini-con(0,0) gave training loss of 2.48 and predicted nothing more than bigram tokens
+
+
+
+
+    </br></br><b>-BPE Tokenizer attempt 2-</b></br>
+    Following <a href = "https://towardsdatascience.com/training-bpe-wordpiece-and-unigram-tokenizers-from-scratch-using-hugging-face-3dd174850713">this medium blog</a>, trained my own BPE (Byte-Pair Encoding) Tokenizer. BPE essentially goes through the text with the base tokens and hierarchically merges the most frequent ones to form subword level tokens that are symantically useful. For eg. eating can be broken into "eat" and "ing" tags, worked into "work" "ed" or other such 2-3 character tokens.
+    <br><span class = "issue">Issue#1:</span> The Tokenizer weirdly handles whitespaces and \n. Currently replaced all of \n with spaces but maybe \n's can be replaced with some other special tokens like "+". Tried that but the output didnt seem to have any +'s so maybe something weird is happening, could just remove it and check....
+    <br>Using BPE tokenizer to generate a total of 500 tokens, Mini-con(1,8) trained for 1 epoch (training loss of 2.16) produces this output (similar prompt as before, just 2 sentences less):
+
+    </br><img src="june_wk3_one_layer_bpe_out.png" alt="Zero Layer softmax" style="zoom:120%"></br>
+    <br> Can extract weight martices for different layers, so  looked at the eigenvalues of different matrices: they are scattered randomly, maybe the attention head output are not?</br
+
+
+    <br>Theory: Added on the theory page, to check verify the nontaion and if the indices match up
+    <br>Bunch of TODOS!
+    <span class="todos">
+        <br>TODO1: Verify the working of QK and OV circuit on tokens. See if any [A]--->[B][C] or other patterns emerge
+        <br>TODO2: Plot the eigenvalues of attention head outputs (the OQK and OV matrices are uniformly distributed, maybe these arent?)
+        <br>TODO3: Observe how the embedding vectors for tokens change as they go through different layers (using PCA/TNSE)
+        <br>TODO4: Start with a GloVE like pretrained embedding vector and train the model
+        <br>TODO5: Check how the pos embeddings affect the model (it definitely makes it better!)
+    </span>
+
+</div></br>
 </body>
+
+
+<button class="collapsible"> <h1 style="text-align: center"> June week 4</h1> [BREAK] </button>
+<div class="content">
+    BREAK
+</div></br>
+
+<button class="collapsible"> <h1 style="text-align: center"> June week 5 / July week 1</h1> Interactive Visualization for Probing Attention, Sinusoidal Positional embeddings </button>
+<div class="content">
+    Positional embeddings - minGPT uses learned positional encodings instead of sinusoidal.
+
+    <br><img src="pics/june_wk5_sin_pos_enc.png" alt="sin_pos_enc" style="zoom:40%">
+    <br></br>Let's probe this.Some references on positional encodings: <a href = "https://kazemnejad.com/blog/transformer_architecture_positional_encoding/"> Here</a>,
+    <a href="https://timodenk.com/blog/linear-relationships-in-the-transformers-positional-encoding/"> Here</a>
+    <a href="https://theaisummer.com/positional-embeddings/"> Positional Encoding vs Embedding</a>
+
+
+    <br> Let's see what the model learns:
+    <br> 1. Untrained model: Seq. len = 128, d_model = 256, num_tok = 1000, layers = 1, heads = 8, Prompt: "\"Did he rip off more heads?\" asked Hermione, sounding squeamish."
+    <br>Plots for untrained pos encoding matrix, OV ckt matrix, its eigen values and histogram of real eigenvalues, QK ckt matrix, its eigen values and histogram of real eigenvalues:
+        <br><img src="pics/june_wk5_untrained_pos_enc.png" alt="untrained_pos_enc" style="zoom:20%">
+            <img src="pics/june_wk5_untrained_ov.png" alt="untrained_ov" style="zoom:20%">
+            <img src="pics/june_wk5_untrained_ov_evalue.png" alt="untrained_ov_evalue" style="zoom:30%">
+            <img src="pics/june_wk5_untrained_ov_evalue2.png" alt="untrained_ov_evalue_2" style="zoom:30%">
+            <img src="pics/june_wk5_untrained_qk.png" alt="untrained_qk" style="zoom:20%">
+            <img src="pics/june_wk5_untrained_qk_evalue.png" alt="untrained_qk_evalue" style="zoom:30%">
+            <img src="pics/june_wk5_untrained_qk_evalue2.png" alt="untrained_qk_evalue2" style="zoom:30%">
+
+    <br> 2. Trained model: Same prompt. Same plots:
+    <br><img src="pics/june_wk5_trained_pos_enc.png" alt="trained_pos_enc" style="zoom:20%">
+    <img src="pics/june_wk5_trained_ov.png" alt="trained_ov" style="zoom:20%">
+    <img src="pics/june_wk5_trained_ov_evalue.png" alt="trained_ov_evalue" style="zoom:30%">
+    <img src="pics/june_wk5_trained_ov_evalue2.png" alt="trained_ov_evalue_2" style="zoom:30%">
+    <img src="pics/june_wk5_trained_qk.png" alt="trained_qk" style="zoom:20%">
+    <img src="pics/june_wk5_trained_qk_evalue.png" alt="trained_qk_evalue" style="zoom:30%">
+    <img src="pics/june_wk5_trained_qk_evalue2.png" alt="trained_qk_evalue2" style="zoom:30%">
+
+    <br> Attention pattern for prompt ('Meanwhile, as the teachers and Hermione persisted in reminding them, the O.W.L.s were drawing ever nearer.')
+    <img src="pics/june_wk5_trained_attn.png" alt="trained_attn" style="zoom:20%">
+
+    <br><span class="issue">Issue 1:</span> Realized that the word to token id encoder was taking in the sequences character by character not as subword chucks (due to the input code being same for the char-to-id and subword-to-id list comprehension, need to fix that). Fortunately, this bug is only in the code for prediction not in the tokenizer model. After fixing the issue:
+    <br><img src="pics/june_wk5_trained_attn_fixed.png" alt="trained_attn_fixed" style="zoom:40%">
+    <img src="pics/june_wk5_trained_attn_fixed_avg.png" alt="trained_attn_avg" style="zoom:40%">
+    <br> Insights!? The model learns to attend less to some tokens, upon inspection, they're all spaces! Most of the tokens attend less to the spaces. "Mrs." is attended by ri, possibly because it sees Mrs. Dursley of Privet Drive...
+    </br><span class="todos">TODO: Decompose circuits into matrices per attention head</span>
+    </br><span class="todos">TODO: Make a framework to view most attended tokens from text </span>
+    </br><span class="todos">TODO: Use sinusoidal positional embedding </span>
+    </br><span class="todos">TODO: Dim Reduction of learned encodings</span>
+    </br><span class="todos">TODO: Think about the attenheads, does the linear combination matter or individual ones do?</span>
+
+Made a visualization framework to view attented tokens from any given input.< add more info>
+
+</div></br>
+
+
+
+<button class="collapsible"> <h1 style="text-align: center"> July week 2</h1> Changing number of attention heads, adding a mlp layer</button>
+<div class="content">
+
+    Initialize with sin pos emb, but still trainable loss 1.95796
+    No layer norm, no biases in self attn 1.814
+    </br><span class="todos">TODO: Use sinusoidal positional embedding </span>
+    </br><span class="todos">TODO: Use Glove embeddings </span>
+    </br><span class="todos">TODO: Remove biases and weights </span>
+    </br><span class="todos">TODO: Dim Reduction of learned encodings</span> Nothing intersting in enc patterns
+    </br><span class="todos">TODO: Make a framework to view most attended tokens from text </span>
+    </br><span class="todos">TODO: Check if the output is not a direct copy of phrases from the training data </span>
+    </br><span class="todos">TODO: Decompose circuits into matrices per attention head</span>
+
+   Attn heads: 1 attn head: loss 2.14460
+    Attn heads: 2 attn head: loss 2.15509
+    attn heads: 4: loss 2.10437
+    attn heads: 8: loss 2.05011
+
+    2layer 1 head: 2.
+
+    with mlp 1 layer 4 hd loss1.787
+
+    </br><span class="todos">TODO: Think about the attenheads, does the linear combination matter or individual ones do?</span>
+    <br> Things not seen yet:
+    <br>majorly positive eigenvalues OV/QK ckts (I see some with positive eigen value in OV but not QK)
+    <br>Induction heads
+    <br> any structure in learned encodings (position or token)
+
+</div></br>
+
+<button class="collapsible"> <h1 style="text-align: center"> July week 3</h1> Literature Review for the state of current research on Transformers</button>
+<div class="content">
+
+
+</div></br>
+
+<button class="collapsible"> <h1 style="text-align: center"> July week 4</h1>  Rough thoughts and references on some interesting directions</button>
+<div class="content">
+
+    Rough thoughts on
+
+    <b>1. Branch specialization</b> direction (that could connect to Interpreting Multimodal transformers):
+    <br> <br>[c] probe 2 task specialization in a 2 branch network. Observe the task specialization depending on the training (either joint training for both tasks or alternate between the two), alluding to the training dynamics affect the symmetry breaking [probed further in c]. In physics this happens when the system transitions from a symmetric to an asymmetric geometry that is non-invariant under symmetry/rotation anymore and so perturbations lead the system to settle into different states (also alluding to dynamics during training affecting this). There is some mathematical work on learning dynamics and symmetry breaking in Neural networks [f,g] but this can be probed for making Interpretable language models or multimodal networks (where different branches learn different representations or perform different tasks.)
+
+    <br> <br>a. Multibranch attentive transformer
+    <br>b. Emergent Structures and Training Dynamics in Large Language Models
+    <br>c. What Matters In Branch Specialization? Using a Toy Task to Make Predictions
+    <br>b. Dual-branch Attention-In-Attention Transformer for single-channel speech enhancement
+    <br>c. Analysis of Branch Specialization and its Application in Image Decomposition
+    <br>d. Logiformer: A Two-Branch Graph Transformer Network for Interpretable Logical Reasoning
+    <br>e. Graphical Clusterability and Local Specialization in Deep Neural Networks
+    <br>f. Noether's Learning Dynamics: Role of Symmetry Breaking in Neural Networks
+    <br>g. Spontaneous Symmetry Breaking In Deep Neural Networks
+    <br>
+
+    <br>Code for branched architecture:
+    <br>https://paperswithcode.com/method/crossvit
+    <br> https://github.com/HA-Transformer/MAT 
+
+    More Info on other directions of thought:
+    <br><br><b>2. Interpertable directions in MLP layers of Transformers</b>
+    <br>References: Chris Olah’s work with SoLUs
+
+    <br><br><b>3. Saliency methods for nlp</b>
+    <br>Ref: Noisegrad
+    <br>Code for generating saliency maps for language models:
+    <br>https://github.com/jalammar/ecco
+    <br>https://github.com/shuoyangd/tarsius
+    <br>https://github.com/DFKI-NLP/thermostat
+    <br>https://github.com/allenai/allennlp-demo
+    <br>https://github.com/antje/bert-attention
+    <br>https://github.com/understandable-machine-intelligence-lab/quantus
+
+    <br><br><b>4. Investigating and interpreting Multimodal Transformers trained on Audio, Text and images</b>
+
+    <br><br><b>5. Are transformer explanations robust to perturbations to model input?</b>
+
+
+    <br><b>Courses on Transformers:</b>
+    <br>https://web.stanford.edu/class/cs25/
+    <br>https://sites.google.com/umd.edu/2021cl1webpage/
+
+
+
+</div></br>
+
+<button class="collapsible"> <h1 style="text-align: center"> July week 5</h1>  Branched Transformers</button>
+<div class="content">
+    <h4>Probing MLP Layers of 1 layer transformer</h4>
+    Trained a 1 layer transformer and added hooks that output: 1. Top k activating tokens per neuron 2. Top k neurons that activated when a particular token is seen.
+    <br>Didnt see any striking pattern so maybe more training is required?
+
+    <h4>Probing learning dynamics in branched transformers</h4>
+Modified the 1 layer architecture for a 1 layer branched transformer. Architecture is simple: input -> embed -> (Attn +MLP)_i -> FFN -> unembed
+    <br> Randomly trying out a few things:
+    <br> 1. Even a small model learns that there is no double spaces or spaces follow words eg. this output from 1 layer 16 head n_embed 64, block_size 512, 45K chars 300 vocab:
+    <br><br> Dursley in wemer wanted the itt an."Ally a t was the ather?" to a the who he whid the to and the thes he was it son he the to was s itsing s hening he was s to thefe he the who to was and the andsk and in ity to to the toices a watr he w toe af s ct to s was the s s. a the the the what hehiss the ather the sk a a to he swho and the sing, cts was he inct he the was the aecouse cupion. s to fuped\'s, thes ald apering s itt the to w it would a corle the heres, and was the w g he what was a the was what he the fill he wo froce, to whatet. the a to was a a hereon ity s whight, apings and, it couirk. a gice to the it. face and he scs\'t ss wasn s wokarill and and the then was a wasn the a s he the would its fue it it a s a to itty cycle to to the he fer whidrorty wateps s and what he\'fore therecorread. s.At\'d and toned to f he word its here. was it heder he the the f awant a s s a the it. was fuptim it w he it to s he to afiming a heres, fore to fin and itd was siderar and to was he toa to a he s a a fumumbett will and wasn to andt he s w frort and to and the the full it was afrolouion he to to to fuse he and to the toped. the he he he it he whidrararons fer theny ands and s a hehis fumorrecan he fuloun ands, a fin finm and topill s the he\'s af the toa the and to he s would watror s a the hehis he the s a f it he he s. it the was to he scanpue. an. and wouldn\'sp h
+    <br><br> I was doing some random explorations on my small models and I see something (mildly) interesting. I was curious to see what it learns starting from a tiny amount of data. After some trials with increasing training data, I'm at a point where in like 20 epochs the model learns that spaces follow words but not other spaces, spaces follow only ending subwords, simple heuristics like that. My training data is ~45k characters (around 2 chapters of the book). Furthermore, I added some hooks into my model that give me the probability of predicting token Y following token X after each epoch. Here's the plot for some tokens:
+    <br><img src="pics/july_wk5_toks_probs.png" style="zoom:20%">
+
+    <br>In my case, I'm looking at P(tok_2 | tok_1) but for training the network looks at P(tok_n | tok_n-1.....tok_1) so I gave that a try for comparison. These are prediction probabilities for two different inputs: "."  and "(context size-1)tokens ." for 40 epochs. I get different curve profiles (as expected?):
+    <br><img src="pics/july_wk5_toksprob1.png" style="zoom:40%"><img src="pics/july_wk5_toksprob2.png" style="zoom:40%">
+
+    <br> Same training data, same no. of heads/embed dims the simple 1 layer attention and mlp (input->embed->attn->mlp->unembed->out) transformer does not show this:
+    <br><img src="pics/jul_wk5_1lyr1.png" style="zoom:40%"><img src="pics/jul_wk5_1lyr2.png" style="zoom:40%">
+    <br> added a ffn layer in the one layer model to make it consistent with others
+    <br><br><b> Test for 1, 2 and 3 branched 1 layer transformers</b>
+    <br>  n_layer=1, n_head=16, n_embd=64, block_size = 128, dashed line is bigram probability (top line of plot3 of 3 branched should be blue to match the colorscheme)
+    <br><img src="pics/jul_wk5_vanilla_1.png" style="zoom:35%"><img src="pics/jul_wk5_vanilla_2.png" style="zoom:35%"><img src="pics/jul_wk5_vanilla_3.png" style="zoom:35%"><img src="pics/jul_wk5_vanilla_4.png" style="zoom:35%">
+    <br><br><img src="pics/jul_wk5_2branch_1.png" style="zoom:35%"><img src="pics/jul_wk5_2branch_2.png" style="zoom:35%"><img src="pics/jul_wk5_2branch_3.png" style="zoom:35%"><img src="pics/jul_wk5_2branch_4.png" style="zoom:35%">
+    <br><br><img src="pics/jul_wk5_3branch_1.png" style="zoom:35%"><img src="pics/jul_wk5_3branch_2.png" style="zoom:35%"><img src="pics/jul_wk5_3branch_3.png" style="zoom:35%"><img src="pics/jul_wk5_3branch_4.png" style="zoom:35%">
+
+
+</div></br>
+
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("activate");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+
+</script>
 </html>

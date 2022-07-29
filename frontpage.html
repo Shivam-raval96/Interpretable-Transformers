@@ -76,8 +76,52 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 
 <br><h2>Summary of Interesting papers</h2>
 
-<br><p>Seminal Transformer works</p>
+<br><p>Branch Specialization</p>
+<span>
+<button class="collapsible">What Matters In Branch Specialization? Using a Toy Task to Make Predictions <a href ="https://openreview.net/forum?id=0kPS1i6wict">[Link]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>  Understand how branches of a neural network learn representations contingent on their architecture and optimization task - Possible model for "multiple-demand" regions of brain
+    <br><b>Specific Contributions:</b>
+    <br>1. Trained branched neural networks on families of Gabor filters as the input training distribution and optimize them to perform combinations of angle, average color, and size approximation tasks.
+    <br>2. Found that networks predictably allocate tasks to the branches with appropriate inductive biases. However, this task-to-branch matching is not required for branch specialization, as even identical branches in a network tend to specialize. Finally,
+    <br>3. Show that branch specialization can be controlled by a curriculum in which tasks are alternated instead of jointly trained.
+    <br>4. Longer training between alternation corresponds to more even task distribution among branches. Faster the alternation rate, the more likely specialization is to occur.
+    <br><b>Methods:</b> 1. Two asymmetric branches: One was a convolutional network with two conv layers followed by two Fully connected layers. The other branch was a fully connected network with two fully connected layers. The outputs of both branches are then fed into a linear output layer, from which the two output values for the dual task (angle and color) are read. Fully connected branch had 3 times less params
+                    <br>Train the entire network on the dual task but then evaluate
+                        branches individually by zeroing out (i.e. lesioning) the final outputs of the other branch before linear output layer.
+                        Compare to where both branches were lesioned and where the network is intact.
+                        Training converges quickly and each task is entirely localized to one branch: angle in conv branch and color in feed fwd
+                    <br>2. Check if branch specialization was robust to the two tasks’ relative contributions loss:
+                    <br> Scaled the losses for both tasks with a convex-combination parameter α.  However, did not see any gradual change in resource allocation, but the same specialization.
+                        Furthermore, even when the branched network was trained on only the color or only the angle task (corresponding to α = 0 and α = 1 respectively), one branch was left unused while other learned doing the task by itself.
+                    <br>3. Two symmetric conv branches: output angle and size: Still see branch specialization. In angle task, both branched were ocassionaly involved but one was more imp than other
+                    <br>4. Curriculum learning affects specialization: losses came entirely from one task for n epochs and switched to the other task for the next n epochs, see specialization for small n and sharing for larger n
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b> How did the network decide ffn->color and conv->angle? What would a symmetric network do with color/angle task? Look into EWC
 
+    <br><b>Insights or interesting information: </b> Why Gabors? So they can design tasks that need not be compositional or hierarchically-local such as object recognition, but can be global (e.g. average color/luminance) and/or order-1 hierarchically local (e.g. orientation). And they try to understand what causes specialization
+            <br>To prevent catastrophic forgetting, we used Elastic Weight Consolidation (Kirkpatrick et al., 2017), or EWC
+                during training. EWC is inspired by synaptic weight consolidation in the brain, where synapses that are involved
+                in long-term memories are strengthened and stay strong for days, weeks, or years (Clopath, 2012). In a similar
+                way, when a network is trained on a new task after having already learned another, EWC prevents weights that
+                are important to previous tasks from changing as much as unimportant weights.
+            <br> How different are the weights of the branches after learning? Check the similarity of the branches
+            <br> How do the weights between branches change during learning
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+</span>
+
+
+<br><p>Multimodal Transformers</p>
+<span>
+
+</span>
+
+
+<br><p>Seminal Transformer works</p>
+<span>
 <button class="collapsible">Neural Machine Translation by Jointly Learning to Align and Translate <a href ="https://arxiv.org/abs/1409.0473">[arXiv:1409.0473]</a></button>
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -85,7 +129,15 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 
 <button class="collapsible">Attention Is All You Need <a href ="https://arxiv.org/abs/1706.03762">[arXiv:1706.03762]</a></button>
 <div class="content">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
 </div>
 
 
@@ -139,16 +191,117 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 </div>
+</span>
+
+<br><p>On Attention Mechanisms</p>
+<span>
+<button class="collapsible" id ="52.">Inductive Biases and Variable Creation in Self-Attention Mechanisms<a href ="https://arxiv.org/abs/2110.10090">[arXiv:2110.10090]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+
+<button class="collapsible" id ="44.">Effective Attention Sheds Light On Interpretability<a href ="https://arxiv.org/abs/2105.08855">[arXiv:2105.08855]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
 
 
+<button class="collapsible" id ="45.">A Mathematical View of Attention Models in Deep Learning<a href ="https://people.tamu.edu/~sji/classes/attn-slides.pdf">[Slides]</a> <a href ="hhttps://people.tamu.edu/~sji/classes/attn.pdf">[PDF]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
 
+<button class="collapsible" id ="46.">A Mathematical Theory of Attention<a href ="https://arxiv.org/abs/2007.02876">[Slides]</a> <a href ="hhttps://people.tamu.edu/~sji/classes/attn.pdf">[PDF]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+
+<button class="collapsible" id ="49.">A Mixture of h−1 Heads is Better than h Heads<a href ="https://arxiv.org/abs/2005.06537">[arXiv:2005.06537]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+
+<button class="collapsible" id ="52.">Inductive Biases and Variable Creation in Self-Attention Mechanisms<a href ="https://arxiv.org/abs/2110.10090">[arXiv:2110.10090]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+
+<button class="collapsible" id ="52.">Inductive Biases and Variable Creation in Self-Attention Mechanisms<a href ="https://arxiv.org/abs/2110.10090">[arXiv:2110.10090]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+</span>
 
 <br><p>On Transformer Interpretability</p>
-
+<span>
 
 <button class="collapsible">Attention is Not All You Need: Pure Attention Loses Rank Doubly Exponentially with Depth <a href ="https://arxiv.org/abs/2103.03404">[arXiv:2103.03404]</a></button>
 <div class="content">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
 </div>
 
 <button class="collapsible">Attention is not Explanation <a href="https://arxiv.org/abs/1902.10186">[arXiv:1902.10186]</a></button>
@@ -192,7 +345,16 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 
 <button class="collapsible">Quantifying Attention Flow in Transformers <a href="https://arxiv.org/abs/2005.00928">[arXiv:2005.00928]</a></button>
 <div class="content">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <br><b>High level goals:</b> Information from different tokens gets mixed as it flows through different layers, making attention weights an unreliable explanation probe.
+    The paper tries to quantify this flow of infomation and proposes 2 ad-hoc methods for analysis.
+    <br><b>Specific Contributions:</b> Attention rollout and Attention flow methods, which yield higher correlations with
+    importance scores of input tokens obtained using an ablation method and input gradients
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
 </div>
 
 <button class="collapsible">On Identifiability in Transformers <a href="https://arxiv.org/abs/1908.04211">[arXiv:1908.04211]</a></button>
@@ -214,13 +376,95 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 </div>
+</span>
 
 
+<br><p>On Positional encodings and Word embeddings</p>
+<span>
+<button class="collapsible" id ="51.">A Learnable Radial Basis Positional Embedding for Coordinate-MLPs??<a href ="https://arxiv.org/abs/2112.11577">[arXiv:2112.11577]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
 
 
+<button class="collapsible" id ="50.">What Do Position Embeddings Learn? An Empirical Study of Pre-Trained Language Model Positional Encoding<a href ="https://aclanthology.org/2020.emnlp-main.555/">[Link]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+
+<button class="collapsible" id ="48."> Learning to Encode Position for Transformer with Continuous Dynamical Model<a href ="https://arxiv.org/abs/2003.09229">[arXiv:2003.09229]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+
+<button class="collapsible" id ="47."> Self-Attention with Relative Position Representations<a href ="https://arxiv.org/abs/1803.02155">[arXiv:1803.02155]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+
+<button class="collapsible" id ="55."> A survey of word embeddings based on deep learning<a href ="https://link.springer.com/article/10.1007/s00607-019-00768-7">[Link]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+
+
+<button class="collapsible" id ="47."> Self-Attention with Relative Position Representations<a href ="https://arxiv.org/abs/1803.02155">[arXiv:1803.02155]</a></button>
+<div class="content">
+    <br><b>High level goals:</b>
+    <br><b>Specific Contributions:</b>
+    <br><b>Methods:</b>
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b>
+    <br><b>Insights or interesting information:</b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
+    <br>
+</div>
+</span>
 
 
 <br><p>On Interpreting BERT-style models</p>
+<span>
 <button class="collapsible">Do Attention Heads in BERT Track Syntactic Dependencies? <a href="https://arxiv.org/abs/1911.12246">[arXiv:1911.12246]</a></button>
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -233,18 +477,35 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 
 <button class="collapsible">What Does BERT Look At? An Analysis of BERT’s Attention <a href="https://arxiv.org/abs/1906.04341">[arXiv:1906.04341]</a></button>
 <div class="content">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <br><b>High level goals:</b> Propose methods for analyzing the attention mechanisms of pre-trained models and apply them to BERT
+    <br><b>Specific Contributions:</b> <br>1. BERT’s attention heads exhibit patterns such as attending to delimiter tokens, specific positional offsets, or broadly attending over the whole sentence, with heads in the same layer often exhibiting similar behaviors.
+            <br>2. Find heads that attend to the direct objects of verbs, determiners of nouns, objects of prepositions, and coreferent mentions with remarkably high accuracy.
+            <br>3. Attention-based probing classifier to show that substantial syntactic information is captured in BERT’s attention.
+    <br><b>Methods:</b>BERT with 12 layers containing 12 attention heads. A special token [CLS] is added to the beginning of the text and another token [SEP] is added to the end
+            <br> Surface level pattern in attention:- The input is [CLS]< paragraph1 >[SEP]< paragraph-2 >[SEP]. Most heads
+    put little attention on the current token, attending heavily on the next or previous token in early layers. Half of BERT’s attention in layers 6-10 focuses on [SEP]. in head 8-10 direct objects attend to their verbs and non-nouns mostly attend to [SEP], attention over these special tokens
+    might be used to find when the attention head’s function is not applicable.
+            <br> Gradient based feature importance: The gradient of the loss from with respect to each attention weight. When attention to [SEP] becomes high – the gradients for that become very small, indicating that attending more or less to [SEP] does not substantially change BERT’s outputs, supporting the theory that attention to [SEP] is used as a no-op for attention heads.
+            <br> Focused vs Broad Attention: average entropy of each head’s attention distribution. Some attention heads, especially in lower layers, have very broad attention.
+            <br> Coreference Resolution:
+    <br><b>Writing/Structure of the paper:</b>
+    <br><b>Things unclear or need further looking into:</b> Coreference resolution seems a bit arbitrary, like it was constructed to maje sure it would work...
+            <br> attn and words probe unclear? Why use Glove embeddings?
+    <br><b>Insights or interesting information: </b>
+    <br><b>Related work:</b>
+    <br><b>Final Thoughts and comments:</b></br>
 </div>
 
 <button class="collapsible">What does BERT dream of? <a href="https://pair-code.github.io/interpretability/text-dream/blogpost/">[Link]</a></button>
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 </div>
+</span>
 
 
 
 <br><p>On Interpreting GPT-style models</p>
-
+<span>
 <button class="collapsible">Interpreting GPT: The Logit Lens <a href="https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens">[Link]</a></button>
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -259,10 +520,10 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 </div>
-
+</span>
 
 <br><p>Visual Analytics for Transformer</p>
-
+<span>
 <button class="collapsible">VisBERT: Hidden-State Visualizations for Transformers <a href="https://arxiv.org/abs/2011.04507">[arXiv:2011.04507]</a></button>
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -304,10 +565,10 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 </div>
-
+</span>
 
 <br><p>Modified Transformer models </p>
-
+<span>
 <button class="collapsible">Linformer: Self-Attention with Linear Complexity <a href="https://arxiv.org/abs/2006.04768">[arXiv:2006.04768]</a></button>
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -342,10 +603,10 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 </div>
-
+</span>
 
 <br><p>Related Mathematical works</p>
-
+<span>
 <button class="collapsible">The low-rank eigenvalue problem <a href="https://arxiv.org/abs/1905.11490">[arXiv:1905.11490]</a></button>
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -420,7 +681,7 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 </div>
-
+</span>
 
 
 
@@ -429,6 +690,12 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 
 
 <br><p>Other works</p>
+<span>
+<button class="collapsible">On Attention head Pruning </button>
+<div class="content">
+    <p>Lot of works focus on pruning or turning of attention heads, either during training or inference with little to no loss in performance, hinting that a lot of heads are redundant</p>
+</div>
+
 
 <button class="collapsible">On the importance of single directions for generalization <a href="https://arxiv.org/abs/1803.06959">[arXiv:1803.06959]</a></button>
 <div class="content">
@@ -509,6 +776,8 @@ PS. I didnt know what else to put on the front page so I'll add a list of papers
 <div class="content">
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 </div>
+</span>
+
 
 
 
